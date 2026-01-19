@@ -269,6 +269,10 @@
                 const session = JSON.parse(savedSession);
                 currentUser = session.username;
                 masterData = session.data;
+
+                // Update Nama di Ucapan Selamat Datang
+                document.getElementById('welcomeName').innerText = currentUser;
+
                 initApp();
             }
         });
@@ -298,6 +302,8 @@
             renderStats();
             renderList();
             showPage('Beranda');
+            // Tambahkan baris ini di dalam fungsi inisialisasi dashboard
+            document.getElementById('welcomeName').innerText = currentUser;
         }
 
         function confirmLogout() {
