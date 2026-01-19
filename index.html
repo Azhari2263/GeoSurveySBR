@@ -58,6 +58,24 @@
         .swal2-cancel {
             border-radius: 1rem !important;
         }
+
+        /* Sticky Search Fix */
+        #searchSection {
+            position: sticky;
+            top: 72px;
+            /* Menyesuaikan tinggi header navigasi */
+            z-index: 30;
+            background: #f8fafc;
+        }
+
+        /* Full Screen Modal Mobile */
+        @media (max-width: 640px) {
+            .modal-full-mobile {
+                border-radius: 0 !important;
+                height: 100vh !important;
+                max-width: 100% !important;
+            }
+        }
     </style>
 </head>
 
@@ -100,7 +118,7 @@
     </div>
 
     <header id="nav"
-        class="hidden glass sticky top-0 z-40 border-b border-white/20 px-6 py-4 flex justify-between items-center">
+        class="hidden glass sticky top-0 z-40 border-b border-white/20 px-6 py-4 flex justify-between items-center h-[72px]">
         <div class="flex items-center gap-2">
             <div class="bg-blue-600 p-1.5 rounded-lg text-white text-xs">
                 <i class="fas fa-map-marked-alt"></i>
@@ -122,8 +140,7 @@
     <div class="flex-grow">
         <main id="pageBeranda" class="hidden p-6 space-y-6 max-w-4xl mx-auto animate-fade-in">
             <div class="grid grid-cols-2 gap-4">
-                <div
-                    class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 group hover:border-blue-200 transition-colors">
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
                     <div
                         class="w-10 h-10 bg-orange-100 text-orange-600 rounded-xl flex items-center justify-center mb-4 text-sm">
                         <i class="fas fa-clipboard-list"></i>
@@ -131,8 +148,7 @@
                     <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Tugas Sisa</p>
                     <h3 id="statNeed" class="text-4xl font-black text-slate-800 mt-1">0</h3>
                 </div>
-                <div
-                    class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100 group hover:border-emerald-200 transition-colors">
+                <div class="bg-white p-6 rounded-[2rem] shadow-sm border border-slate-100">
                     <div
                         class="w-10 h-10 bg-emerald-100 text-emerald-600 rounded-xl flex items-center justify-center mb-4 text-sm">
                         <i class="fas fa-check-double"></i>
@@ -141,7 +157,6 @@
                     <h3 id="statDone" class="text-4xl font-black text-slate-800 mt-1">0</h3>
                 </div>
             </div>
-
             <div
                 class="card-gradient p-8 rounded-[2.5rem] text-white shadow-2xl shadow-blue-200 relative overflow-hidden">
                 <div class="relative z-10">
@@ -160,83 +175,114 @@
             </div>
         </main>
 
-        <main id="pageList" class="hidden p-6 space-y-6 max-w-4xl mx-auto animate-fade-in">
-            <div class="sticky top-[80px] z-30 space-y-3">
-                <div class="relative group">
-                    <i
-                        class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
-                    <input type="text" id="searchInput" onkeyup="resetPaginationAndRender()"
-                        placeholder="Cari Nama Usaha atau Alamat..."
-                        class="w-full pl-14 pr-6 py-5 bg-white rounded-[1.5rem] shadow-lg shadow-slate-100 border-none focus:ring-2 focus:ring-blue-500 transition-all outline-none">
-                </div>
-                <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
-                    <select id="filterKec" onchange="resetPaginationAndRender()"
-                        class="bg-white px-5 py-3 rounded-full text-xs font-bold shadow-sm border border-slate-100 focus:ring-2 focus:ring-blue-500 outline-none min-w-[140px]">
-                        <option value="">Semua Kecamatan</option>
-                    </select>
-                    <select id="filterDesa" onchange="resetPaginationAndRender()"
-                        class="bg-white px-5 py-3 rounded-full text-xs font-bold shadow-sm border border-slate-100 focus:ring-2 focus:ring-blue-500 outline-none min-w-[140px]">
-                        <option value="">Semua Kelurahan</option>
-                    </select>
+        <main id="pageList" class="hidden animate-fade-in">
+            <div id="searchSection" class="p-6 pb-2 border-b border-slate-100">
+                <div class="max-w-4xl mx-auto space-y-3">
+                    <div class="relative group">
+                        <i
+                            class="fas fa-search absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 group-focus-within:text-blue-500 transition-colors"></i>
+                        <input type="text" id="searchInput" onkeyup="resetPaginationAndRender()"
+                            placeholder="Cari Nama Usaha atau Alamat..."
+                            class="w-full pl-14 pr-6 py-5 bg-white rounded-[1.5rem] shadow-lg shadow-slate-100 border-none focus:ring-2 focus:ring-blue-500 transition-all outline-none">
+                    </div>
+                    <div class="flex gap-2 overflow-x-auto no-scrollbar pb-2">
+                        <select id="filterKec" onchange="resetPaginationAndRender()"
+                            class="bg-white px-5 py-3 rounded-full text-xs font-bold shadow-sm border border-slate-100 focus:ring-2 focus:ring-blue-500 outline-none min-w-[140px]">
+                            <option value="">Semua Kecamatan</option>
+                        </select>
+                        <select id="filterDesa" onchange="resetPaginationAndRender()"
+                            class="bg-white px-5 py-3 rounded-full text-xs font-bold shadow-sm border border-slate-100 focus:ring-2 focus:ring-blue-500 outline-none min-w-[140px]">
+                            <option value="">Semua Kelurahan</option>
+                        </select>
+                    </div>
                 </div>
             </div>
 
-            <div id="listContainer" class="space-y-4"></div>
+            <div class="p-6 max-w-4xl mx-auto">
+                <div id="listContainer" class="space-y-4"></div>
+                <div id="paginationControls" class="flex justify-between items-center py-8 pb-32">
+                    <button id="btnPrev" onclick="changePage(-1)"
+                        class="px-6 py-3 bg-white rounded-2xl shadow-sm text-blue-600 font-bold text-sm disabled:opacity-30 disabled:pointer-events-none transition-all">
+                        <i class="fas fa-chevron-left mr-2"></i> Prev
+                    </button>
+                    <span id="pageIndicator"
+                        class="text-xs font-bold text-slate-400 uppercase tracking-widest text-center">Hal 1 dari
+                        1</span>
+                    <button id="btnNext" onclick="changePage(1)"
+                        class="px-6 py-3 bg-white rounded-2xl shadow-sm text-blue-600 font-bold text-sm disabled:opacity-30 disabled:pointer-events-none transition-all">
+                        Next <i class="fas fa-chevron-right ml-2"></i>
+                    </button>
+                </div>
+            </div>
+        </main>
 
-            <div id="paginationControls" class="flex justify-between items-center py-6 pb-24">
-                <button id="btnPrev" onclick="changePage(-1)"
-                    class="px-6 py-3 bg-white rounded-2xl shadow-sm text-blue-600 font-bold text-sm disabled:opacity-30 disabled:pointer-events-none transition-all">
-                    <i class="fas fa-chevron-left mr-2"></i> Sebelumnya
-                </button>
-                <span id="pageIndicator" class="text-xs font-bold text-slate-400 uppercase tracking-widest">Hal 1 dari
-                    1</span>
-                <button id="btnNext" onclick="changePage(1)"
-                    class="px-6 py-3 bg-white rounded-2xl shadow-sm text-blue-600 font-bold text-sm disabled:opacity-30 disabled:pointer-events-none transition-all">
-                    Selanjutnya <i class="fas fa-chevron-right ml-2"></i>
-                </button>
+        <main id="pagePanduan" class="hidden p-6 space-y-6 max-w-4xl mx-auto animate-fade-in pb-32">
+            <h2 class="text-2xl font-black text-slate-800 mb-4">Panduan Penggunaan</h2>
+            <div class="space-y-4">
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100">
+                    <h4 class="font-bold text-blue-600 mb-2">1. Pencarian Tugas</h4>
+                    <p class="text-sm text-slate-500">Buka menu <b>Tugas</b>, gunakan kolom pencarian atau filter
+                        wilayah untuk menemukan target usaha.</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100">
+                    <h4 class="font-bold text-blue-600 mb-2">2. Geotagging</h4>
+                    <p class="text-sm text-slate-500">Klik tombol <b>DETAIL</b>, pastikan izin kamera dan GPS
+                        diaktifkan, lalu klik <b>SIMPAN GEOTAGGING</b> saat berada di lokasi.</p>
+                </div>
+                <div class="bg-white p-6 rounded-[2rem] border border-slate-100">
+                    <h4 class="font-bold text-blue-600 mb-2">3. Progres</h4>
+                    <p class="text-sm text-slate-500">Pantau progres kerja Anda melalui grafik di menu <b>Dashboard</b>.
+                    </p>
+                </div>
             </div>
         </main>
     </div>
 
     <footer id="footer" class="hidden text-center py-8 text-slate-400 text-xs font-medium border-t border-slate-100">
         <div class="flex flex-col items-center gap-2">
-            <div class="flex items-center gap-2 grayscale opacity-50">
-                <i class="fas fa-building-columns"></i>
-                <span class="tracking-widest uppercase">Badan Pusat Statistik</span>
-            </div>
+            <i class="fas fa-building-columns opacity-50 text-lg"></i>
             <p>&copy; Created BPS Kota Singkawang - 2025</p>
         </div>
     </footer>
 
     <div id="modalDetail"
-        class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[60] flex items-end sm:items-center justify-center p-0 sm:p-4 transition-all">
+        class="hidden fixed inset-0 bg-slate-900/60 backdrop-blur-md z-[60] flex items-center justify-center p-0 sm:p-4 transition-all">
         <div
-            class="bg-white w-full max-w-xl rounded-t-[3rem] sm:rounded-[2.5rem] p-8 space-y-6 shadow-2xl animate-fade-in">
-            <div class="flex justify-between items-start">
-                <div>
+            class="bg-white w-full max-w-xl modal-full-mobile sm:rounded-[2.5rem] flex flex-col shadow-2xl animate-fade-in overflow-hidden">
+            <div class="p-8 pb-4 flex justify-between items-start border-b border-slate-50">
+                <div class="pr-4">
                     <span
                         class="bg-blue-100 text-blue-600 px-3 py-1 rounded-lg text-[10px] font-black uppercase tracking-wider"
                         id="detIdsbr">ID</span>
                     <h3 class="font-black text-2xl text-slate-800 mt-2 leading-tight" id="detNamaUsaha">Detail Usaha
                     </h3>
-                    <p class="text-slate-500 text-sm mt-1" id="detAlamat"></p>
                 </div>
                 <button onclick="closeModal()"
-                    class="w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all">
+                    class="shrink-0 w-10 h-10 rounded-full bg-slate-100 text-slate-400 flex items-center justify-center hover:bg-red-50 hover:text-red-500 transition-all">
                     <i class="fas fa-times"></i>
                 </button>
             </div>
 
-            <div
-                class="relative rounded-[2rem] bg-slate-900 aspect-video overflow-hidden shadow-2xl ring-4 ring-slate-50">
-                <video id="video" class="w-full h-full object-cover" autoplay playsinline></video>
-                <canvas id="canvas" class="hidden"></canvas>
+            <div class="flex-grow overflow-y-auto p-8 pt-4 space-y-6">
+                <div id="fullInfoContent" class="space-y-3 bg-slate-50 p-6 rounded-[1.5rem]">
+                    <p class="text-[10px] font-black text-slate-400 uppercase tracking-widest mb-2 border-b pb-2">
+                        Informasi Lengkap Data</p>
+                    <div id="infoRows" class="space-y-2"></div>
+                </div>
+
+                <div
+                    class="relative rounded-[2rem] bg-slate-900 aspect-video overflow-hidden shadow-2xl ring-4 ring-slate-50">
+                    <video id="video" class="w-full h-full object-cover" autoplay playsinline></video>
+                    <canvas id="canvas" class="hidden"></canvas>
+                </div>
             </div>
 
-            <button id="btnGeo" onclick="processGeotag()"
-                class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black shadow-xl shadow-blue-200 flex items-center justify-center gap-3 active:scale-95 hover:bg-blue-700 transition-all">
-                <i class="fas fa-camera-retro"></i> SIMPAN GEOTAGGING
-            </button>
+            <div class="p-8 border-t border-slate-50">
+                <button id="btnGeo" onclick="processGeotag()"
+                    class="w-full bg-blue-600 text-white py-5 rounded-2xl font-black shadow-xl shadow-blue-200 flex items-center justify-center gap-3 active:scale-95 hover:bg-blue-700 transition-all">
+                    <i class="fas fa-camera-retro"></i> SIMPAN GEOTAGGING
+                </button>
+            </div>
         </div>
     </div>
 
@@ -252,6 +298,11 @@
             <i class="fas fa-map-pin"></i>
             <span class="text-[9px] font-bold uppercase tracking-widest">Tugas</span>
         </button>
+        <button id="btnNavPanduan" onclick="showPage('Panduan')"
+            class="flex-1 py-4 text-slate-400 flex flex-col items-center gap-1 transition-all">
+            <i class="fas fa-book-open"></i>
+            <span class="text-[9px] font-bold uppercase tracking-widest">Panduan</span>
+        </button>
     </nav>
 
     <script>
@@ -259,8 +310,6 @@
         let currentUser = "";
         let masterData = [];
         let activeRow = null;
-
-        // Pagination State
         let currentPage = 1;
         const itemsPerPage = 50;
 
@@ -276,53 +325,35 @@
                 Swal.fire({ icon: 'warning', title: 'Oops!', text: 'Username dan Password wajib diisi.' });
                 return;
             }
-
             toggleLoader(true, "Memverifikasi Akses...");
-
             try {
                 const res = await fetch(webAppUrl, {
                     method: 'POST',
                     body: JSON.stringify({ action: "login", username: user, password: pass })
                 });
                 const response = await res.json();
-
                 if (response.status === "success") {
                     currentUser = response.username;
                     masterData = response.data;
-
                     document.getElementById('loginPage').classList.add('hidden');
-                    document.getElementById('nav').classList.remove('hidden');
-                    document.getElementById('bottomNav').classList.remove('hidden');
-                    document.getElementById('footer').classList.remove('hidden');
+                    ['nav', 'bottomNav', 'footer'].forEach(id => document.getElementById(id).classList.remove('hidden'));
                     document.getElementById('userDisplay').innerText = currentUser;
-
                     populateFilterOptions();
                     renderStats();
                     renderList();
                     showPage('Beranda');
-
-                    Swal.fire({ icon: 'success', title: 'Berhasil!', text: `Selamat datang, ${currentUser}`, timer: 2000, showConfirmButton: false });
+                    Swal.fire({ icon: 'success', title: 'Berhasil!', text: `Selamat datang, ${currentUser}`, timer: 1500, showConfirmButton: false });
                 } else {
                     Swal.fire({ icon: 'error', title: 'Akses Ditolak', text: 'Username atau Password salah.' });
                 }
             } catch (e) {
                 Swal.fire({ icon: 'error', title: 'Gangguan Koneksi', text: e.message });
-            } finally {
-                toggleLoader(false);
-            }
+            } finally { toggleLoader(false); }
         }
 
         function confirmLogout() {
-            Swal.fire({
-                title: 'Keluar?',
-                text: "Sesi Anda akan berakhir.",
-                icon: 'question',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Keluar',
-                cancelButtonText: 'Batal'
-            }).then((result) => {
-                if (result.isConfirmed) location.reload();
-            });
+            Swal.fire({ title: 'Keluar?', text: "Sesi Anda akan berakhir.", icon: 'question', showCancelButton: true, confirmButtonText: 'Ya', cancelButtonText: 'Batal' })
+                .then((result) => { if (result.isConfirmed) location.reload(); });
         }
 
         function populateFilterOptions() {
@@ -338,18 +369,14 @@
 
         function renderStats() {
             const done = masterData.filter(d => d.Latitude !== "").length;
-            const need = masterData.length - done;
             const p = Math.round((done / masterData.length) * 100) || 0;
-            document.getElementById('statNeed').innerText = need;
+            document.getElementById('statNeed').innerText = masterData.length - done;
             document.getElementById('statDone').innerText = done;
             document.getElementById('statPercent').innerText = p + "%";
             document.getElementById('progressBar').style.width = p + "%";
         }
 
-        function resetPaginationAndRender() {
-            currentPage = 1;
-            renderList();
-        }
+        function resetPaginationAndRender() { currentPage = 1; renderList(); }
 
         function renderList() {
             const container = document.getElementById('listContainer');
@@ -357,7 +384,6 @@
             const fKec = document.getElementById('filterKec').value;
             const fDesa = document.getElementById('filterDesa').value;
 
-            // 1. Filter Data
             let filtered = masterData.filter(i => {
                 const matchSearch = i["Nama Usaha"].toLowerCase().includes(search) || i["Alamat"].toLowerCase().includes(search);
                 const matchKec = !fKec || i["Kode Kec"] == fKec;
@@ -365,54 +391,54 @@
                 return matchSearch && matchKec && matchDesa;
             }).sort((a, b) => (a.Latitude === "" ? -1 : 1));
 
-            // 2. Pagination Logic
             const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
-            if (currentPage > totalPages) currentPage = totalPages;
+            const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
 
-            const start = (currentPage - 1) * itemsPerPage;
-            const end = start + itemsPerPage;
-            const paginatedItems = filtered.slice(start, end);
-
-            // 3. Render List
-            container.innerHTML = "";
-            if (paginatedItems.length === 0) {
-                container.innerHTML = `<div class="text-center py-20 opacity-30 font-bold">Data tidak ditemukan</div>`;
-            } else {
-                paginatedItems.forEach(item => {
-                    const isDone = item.Latitude !== "";
-                    const card = document.createElement('div');
-                    card.className = `bg-white p-5 rounded-[1.8rem] shadow-sm flex items-center gap-4 transition-all border-2 ${isDone ? 'border-emerald-50 bg-emerald-50/30' : 'border-transparent active:scale-95'}`;
-                    card.innerHTML = `
-                        <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-blue-100 text-blue-600'}">
-                            <i class="fas ${isDone ? 'fa-check' : 'fa-map-location-dot'}"></i>
-                        </div>
-                        <div class="flex-1 min-w-0">
-                            <h4 class="font-bold text-slate-800 truncate">${item["Nama Usaha"]}</h4>
-                            <p class="text-[11px] text-slate-400 font-medium truncate mt-0.5">${item.Alamat}</p>
-                        </div>
-                        <button onclick='openDetail(${JSON.stringify(item)})' class="bg-slate-100 hover:bg-blue-600 hover:text-white text-slate-600 px-4 py-2.5 rounded-xl font-bold text-[10px] transition-all">DETAIL</button>
-                    `;
-                    container.appendChild(card);
-                });
-            }
-
-            // 4. Update Pagination UI
+            container.innerHTML = paginated.length === 0 ? `<div class='text-center py-10 opacity-30'>Data Kosong</div>` : "";
+            paginated.forEach(item => {
+                const isDone = item.Latitude !== "";
+                const card = document.createElement('div');
+                card.className = `bg-white p-5 rounded-[1.8rem] shadow-sm flex items-center gap-4 border-2 ${isDone ? 'border-emerald-50 bg-emerald-50/20' : 'border-transparent active:scale-95'}`;
+                card.innerHTML = `
+                    <div class="w-12 h-12 rounded-2xl flex items-center justify-center shrink-0 ${isDone ? 'bg-emerald-500 text-white' : 'bg-blue-100 text-blue-600'}">
+                        <i class="fas ${isDone ? 'fa-check' : 'fa-map-location-dot'}"></i>
+                    </div>
+                    <div class="flex-1 min-w-0">
+                        <h4 class="font-bold text-slate-800 truncate">${item["Nama Usaha"]}</h4>
+                        <p class="text-[11px] text-slate-500 leading-tight mt-0.5">${item.Alamat}</p>
+                    </div>
+                    <button onclick='openDetail(${JSON.stringify(item)})' class="bg-blue-50 text-blue-600 px-4 py-2.5 rounded-xl font-bold text-[10px] hover:bg-blue-600 hover:text-white transition-all">DETAIL</button>
+                `;
+                container.appendChild(card);
+            });
             document.getElementById('pageIndicator').innerText = `Hal ${currentPage} dari ${totalPages}`;
             document.getElementById('btnPrev').disabled = (currentPage === 1);
             document.getElementById('btnNext').disabled = (currentPage === totalPages);
         }
 
-        function changePage(step) {
-            currentPage += step;
-            renderList();
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
+        function changePage(step) { currentPage += step; renderList(); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
         function openDetail(item) {
             activeRow = item;
             document.getElementById('detNamaUsaha').innerText = item["Nama Usaha"];
             document.getElementById('detIdsbr').innerText = item.IDSBR;
-            document.getElementById('detAlamat').innerText = item.Alamat;
+
+            // Build Full Info List Dinamis
+            const infoContainer = document.getElementById('infoRows');
+            infoContainer.innerHTML = "";
+
+            // Kolom yang dikecualikan dari detail
+            const exclude = ['rowIndex', 'image', 'lat', 'lng', 'Latitude', 'Longitude'];
+
+            Object.keys(item).forEach(key => {
+                if (!exclude.includes(key) && item[key] !== "") {
+                    const row = document.createElement('div');
+                    row.className = "flex justify-between items-start gap-4 text-[11px] border-b border-slate-200/50 pb-2";
+                    row.innerHTML = `<span class="text-slate-400 font-medium">${key}</span> <span class="text-slate-700 font-bold text-right">${item[key]}</span>`;
+                    infoContainer.appendChild(row);
+                }
+            });
+
             document.getElementById('modalDetail').classList.remove('hidden');
             startCamera();
         }
@@ -426,33 +452,18 @@
         function startCamera() {
             navigator.mediaDevices.getUserMedia({ video: { facingMode: "environment" } })
                 .then(s => document.getElementById('video').srcObject = s)
-                .catch(e => {
-                    Swal.fire({ icon: 'error', title: 'Kamera Error', text: 'Pastikan izin kamera aktif!' });
-                    closeModal();
-                });
+                .catch(e => { Swal.fire({ icon: 'error', title: 'Kamera Error', text: 'Izin kamera ditolak.' }); closeModal(); });
         }
 
         async function processGeotag() {
-            const { isConfirmed } = await Swal.fire({
-                title: 'Simpan Geotag?',
-                text: "Pastikan Anda berada di depan lokasi usaha.",
-                icon: 'camera',
-                showCancelButton: true,
-                confirmButtonText: 'Ya, Simpan',
-                cancelButtonText: 'Batal'
-            });
-
+            const { isConfirmed } = await Swal.fire({ title: 'Simpan?', text: "Pastikan Anda di lokasi.", icon: 'camera', showCancelButton: true, confirmButtonText: 'Simpan' });
             if (!isConfirmed) return;
-
             toggleLoader(true, "Mengunci GPS...");
-
             navigator.geolocation.getCurrentPosition(async pos => {
-                toggleLoader(true, "Mengirim Data...");
+                toggleLoader(true, "Mengirim...");
                 const c = document.getElementById('canvas'), v = document.getElementById('video');
                 c.width = v.videoWidth; c.height = v.videoHeight;
                 c.getContext('2d').drawImage(v, 0, 0);
-                const img = c.toDataURL('image/jpeg', 0.6).split(',')[1];
-
                 try {
                     await fetch(webAppUrl, {
                         method: 'POST',
@@ -461,46 +472,30 @@
                             action: "updateGeotag",
                             rowIndex: activeRow.rowIndex,
                             idsbr: activeRow.IDSBR,
-                            namaUsaha: activeRow["Nama Usaha"], // Tambahkan ini
-                            namaPetugas: currentUser,           // Tambahkan ini
+                            namaUsaha: activeRow["Nama Usaha"],
+                            namaPetugas: currentUser,
                             lat: pos.coords.latitude,
                             lng: pos.coords.longitude,
-                            image: img
+                            image: c.toDataURL('image/jpeg', 0.6).split(',')[1]
                         })
                     });
-
                     const idx = masterData.findIndex(d => d.rowIndex === activeRow.rowIndex);
                     masterData[idx].Latitude = pos.coords.latitude;
-
                     toggleLoader(false);
-                    Swal.fire({ icon: 'success', title: 'Berhasil!', text: 'Geotagging berhasil diverifikasi.', timer: 2000 });
-                    closeModal();
-                    renderStats();
-                    renderList();
-                } catch (err) {
-                    toggleLoader(false);
-                    Swal.fire({ icon: 'error', title: 'Gagal Simpan', text: err.message });
-                }
-            }, e => {
-                toggleLoader(false);
-                Swal.fire({ icon: 'error', title: 'GPS Gagal', text: 'Sinyal GPS tidak ditemukan atau izin ditolak.' });
-            });
+                    Swal.fire({ icon: 'success', title: 'Berhasil!', timer: 1500 });
+                    closeModal(); renderStats(); renderList();
+                } catch (err) { toggleLoader(false); Swal.fire({ icon: 'error', text: err.message }); }
+            }, e => { toggleLoader(false); Swal.fire({ icon: 'error', text: 'GPS Gagal!' }); });
         }
 
         function showPage(p) {
-            document.getElementById('pageBeranda').classList.toggle('hidden', p !== 'Beranda');
-            document.getElementById('pageList').classList.toggle('hidden', p !== 'List');
-
-            const btnB = document.getElementById('btnNavBeranda');
-            const btnL = document.getElementById('btnNavList');
-
-            if (p === 'Beranda') {
-                btnB.classList.replace('text-slate-400', 'text-blue-600');
-                btnL.classList.replace('text-blue-600', 'text-slate-400');
-            } else {
-                btnL.classList.replace('text-slate-400', 'text-blue-600');
-                btnB.classList.replace('text-blue-600', 'text-slate-400');
-            }
+            ['pageBeranda', 'pageList', 'pagePanduan'].forEach(id => document.getElementById(id).classList.add('hidden'));
+            document.getElementById('page' + p).classList.remove('hidden');
+            ['btnNavBeranda', 'btnNavList', 'btnNavPanduan'].forEach(id => {
+                const el = document.getElementById(id);
+                el.classList.replace('text-blue-600', 'text-slate-400');
+                if (id === 'btnNav' + p) el.classList.replace('text-slate-400', 'text-blue-600');
+            });
             window.scrollTo(0, 0);
         }
     </script>
