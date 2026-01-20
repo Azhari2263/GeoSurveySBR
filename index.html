@@ -351,7 +351,18 @@
                 const matchStat = !fStat || (fStat === "Ditemukan" ? isFound : !isFound);
 
                 return matchSearch && matchKec && matchDesa && matchStat;
-            }).sort((a, b) => ((a.Latitude && String(a.Latitude).trim() !== "") ? 1 : -1));
+            }).sort((a, b) => {
+                const isDoneA = a.Latitude && String(a.Latitude).trim() !== "";
+                const isDoneB = b.Latitude && String(b.Latitude).trim() !== "";
+
+                // Jika status selesainya berbeda, dahulukan yang belum selesai
+                if (isDoneA !== isDoneB) {
+                    return isDoneA ? 1 : -1;
+                }
+
+                // Jika statusnya sama, urutkan berdasarkan Nama Usaha A-Z
+                return (a["Nama Usaha"] || "").localeCompare(b["Nama Usaha"] || "");
+            });
 
             const totalPages = Math.ceil(filtered.length / itemsPerPage) || 1;
             const paginated = filtered.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage);
